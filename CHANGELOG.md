@@ -15,6 +15,12 @@ Types of changes:
 
 ## [Unreleased]
 
+## [1.7.1] - 2025-08-02
+
+### Fixed
+
+- [ICSCards parser complains about converting string "12 jul 2025" to a date.](https://github.com/gpaulissen/ofxstatement-dutch/issues/16)
+
 ## [1.7.0] - 2025-04-21
 
 ### Fixed
