@@ -42,7 +42,7 @@ statement line date ({})".format(start_date, min_date)
             assert end_date and max_date and end_date > max_date, \
                 "The statement end date ({}) should be greater than the \
 largest statement line date ({})".format(end_date, max_date)
-        except Exception as e:
+        except Exception as e:  # pragma: no cover
             raise ValidationError(str(e), self)
 
 

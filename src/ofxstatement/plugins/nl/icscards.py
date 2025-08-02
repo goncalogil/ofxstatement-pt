@@ -155,7 +155,7 @@ class Parser(BaseStatementParser):  # type: ignore
                     row.insert(-2, '  ')
                 if row[-5] not in ['Af', 'Bij']:
                     row.insert(-4, '  ')
-                if row[-7] not in ['Af', 'Bij']:
+                if row[-7] not in ['Af', 'Bij']:  # pragma: no cover
                     row.insert(-6, '  ')
                 assert len(row) == 8
                 for i in range(int(len(row) / 2)):
@@ -217,8 +217,19 @@ class Parser(BaseStatementParser):  # type: ignore
         def get_date(d_m: str) -> Optional[datetime]:
             # Without a year it will be 1900 so add the year
             assert self.statement.end_date and self.statement.end_date.year
-            d_m_y = "{} {}".format(d_m, self.statement.end_date.year)
-            dt: Optional[datetime] = datetime.strptime(d_m_y, '%d %b %Y')
+            # GJP 2025-07-31 Sometimes abbreviated months will be displayed with a period, sometimes without
+            format = "%d %b %Y"
+            d_m_suffixes = ["", "."]
+            dt: Optional[datetime]
+            for d_m_suffix in d_m_suffixes:
+                d_m_y = "{}{} {}".format(d_m, d_m_suffix, getattr(self.statement.end_date, "year"))
+                try:
+                    dt = datetime.strptime(d_m_y, format)
+                    break  # all is well
+                except ValueError as e:
+                    # Reraise when it is the last suffix
+                    if d_m_suffix == d_m_suffixes[-1]:  # pragma: no cover
+                        raise e
             # But now the resulting date may be more than the end date
             # (d_m in december and end date in january)
             if dt and dt > self.statement.end_date:
