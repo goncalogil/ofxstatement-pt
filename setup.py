@@ -67,7 +67,6 @@ if __name__ == '__main__':
                   "degiro", "ing", "icscards", "knab"],
         packages=find_packages('src'),
         package_dir={'': 'src'},
-        namespace_packages=["ofxstatement", "ofxstatement.plugins"],
         long_description=readme + changes,
         long_description_content_type='text/markdown',
         include_package_data=True,
@@ -92,9 +91,6 @@ if __name__ == '__main__':
         entry_points={
             'ofxstatement':
             ['nl-degiro = ofxstatement.plugins.nl.degiro:Plugin',
-             'nl-icscards = ofxstatement.plugins.nl.icscards:Plugin',
-             'nl-ing = ofxstatement.plugins.nl.ing:Plugin',
-             'nl-knab = ofxstatement.plugins.nl.knab:Plugin',
-             'nl-asn = ofxstatement.plugins.nl.asn:Plugin']
+             'pt-degiro = ofxstatement.plugins.pt.degiro:Plugin']
         },
     )
